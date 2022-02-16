@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -15,16 +16,14 @@ public class ListUsers extends HttpServlet {
       throws ServletException, IOException {
     Set<Map.Entry<Integer, String>> entries =
         ((TreeMap) req.getServletContext().getAttribute(UserDataFilter.USER_ATTR)).entrySet();
-
+    PrintWriter writer = resp.getWriter();
+    writer.append("<html><body>");
     entries.forEach(
         entry -> {
-          try {
-            resp.getWriter()
-                .write("Username:" + entry.getKey() + " Password:" + entry.getValue() + "\n");
-          } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
+          writer.append(
+              "<p>" + "Username:" + entry.getKey() + " Password:" + entry.getValue() + "</p>");
         });
+    writer.append("<a href=\"\\\"> Go Back!</a>");
+    writer.append("</body></html");
   }
 }
