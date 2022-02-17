@@ -11,10 +11,12 @@ import jakarta.servlet.annotation.WebFilter;
 @WebFilter("/*")
 public class UserDataFilter implements Filter {
   public static final String USER_ATTR = "users";
+  public static final String LOG_ATTR = "loggedIn";
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     filterConfig.getServletContext().setAttribute(USER_ATTR, new TreeMap<String, String>());
+    filterConfig.getServletContext().setAttribute(LOG_ATTR, false);
   }
 
   @Override

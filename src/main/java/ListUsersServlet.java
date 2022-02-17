@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/list-users")
-public class ListUsers extends HttpServlet {
+public class ListUsersServlet extends HttpServlet {
 
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
@@ -23,7 +23,10 @@ public class ListUsers extends HttpServlet {
           writer.append(
               "<p>" + "Username:" + entry.getKey() + " Password:" + entry.getValue() + "</p>");
         });
-    writer.append("<a href=\"\\\"> Go Back!</a>");
+    writer.append(
+        "<form action =\"/\">\r\n"
+            + "        <button type = \"submit\">Go back to start</button>\r\n"
+            + "      </form>");
     writer.append("</body></html");
   }
 }

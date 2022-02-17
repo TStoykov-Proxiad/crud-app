@@ -1,9 +1,13 @@
 <html>
 <body>
-<ul>
-<li><a href="/list-users">List of Users</a></li>
-<li><a href="/register">Register</a>
-<li><a href="/update-user">Update</a>
-</ul>
+<form action ="/list-users">
+      	<button type = "submit">Show all registered users</button>
+</form>
+<form action ="/register">
+      	<button type = "submit">Create a new account</button>
+</form>
+<form action ="/update">
+      	<button type = "submit">Update profile</button>
+</form>
 </body>
 </html>

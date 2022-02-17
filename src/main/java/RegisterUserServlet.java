@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/register")
-public class RegisterUser extends HttpServlet {
+public class RegisterUserServlet extends HttpServlet {
 
   protected void service(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
@@ -27,19 +27,17 @@ public class RegisterUser extends HttpServlet {
       throws ServletException, IOException {
     String name = req.getParameter("username");
     String pass = req.getParameter("pswd");
-    boolean registered = false;
+    RequestDispatcher dispatcher =
+        getServletContext().getRequestDispatcher("/user-registration.jsp");
+    boolean registered = false; // used to check if user is already registered
     TreeMap<String, String> allUsers =
         (TreeMap<String, String>) req.getServletContext().getAttribute(UserDataFilter.USER_ATTR);
     if (!allUsers.containsKey(name)) {
       allUsers.put(name, pass);
       registered = true;
     }
-    req.setAttribute("registered", Boolean.toString(registered));
+    req.setAttribute("registered", registered);
     req.getServletContext().setAttribute(UserDataFilter.USER_ATTR, allUsers);
-    if (registered) {
-      resp.getWriter().append("<p>Registered!</p> <a href=\"/\"> Go Back!</a>");
-    } else {
-      resp.getWriter().append("<p>User already exists</p> <a href=\"/register\"> Go Back!</a>");
-    }
+    dispatcher.forward(req, resp);
   }
 }
