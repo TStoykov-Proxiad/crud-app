@@ -21,7 +21,12 @@ public class ListUsersServlet extends HttpServlet {
     entries.forEach(
         entry -> {
           writer.append(
-              "<p>" + "Username:" + entry.getKey() + " Password:" + entry.getValue() + "</p>");
+              "<p>"
+                  + "Username: "
+                  + entry.getKey()
+                  + "<br />Password: "
+                  + entry.getValue()
+                  + "</p>");
         });
     writer.append(
         "<form action =\"/\">\r\n"

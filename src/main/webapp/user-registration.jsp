@@ -21,8 +21,8 @@
          Username: <input type = "text" name = "username" placeholder = "Enter Username" required />
          <br />
          Password: <input type = "password" name = "pswd" placeholder = "Enter Password" required />
-         <br />
-         <button type = "submit" value = "Submit">Submit</button>
+         <br /><br />
+         <button type = "submit" value = "Submit">Register</button>
       </form>
 	<br />
 <form action ="/">

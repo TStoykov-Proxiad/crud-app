@@ -17,6 +17,7 @@
          Username: <input type = "text" name = "username">
          <br />
          Password: <input type = "password" name = "pswd" />
+         <br /><br />
          <button type = "submit">Log in</button>         
       	</form>
 	</c:if>
@@ -28,13 +29,16 @@
          Password: <input type = "password" name = "pswd" />
          <p><button type = "submit">Update</button></p>
       	</form>
+      	<br />
       	<form method="post" name = "delete">
       	<button type = "submit" name = "delete">Delete account</button>
       	</form>	
+      	<br />
       	<form method="post" name = "logout">
       	<button type = "submit" name = "logout">Log out</button>
       	</form>	
       </c:if>  
+      <br />
       <form action ="/">
       	<button type = "submit">Go back to start</button>
       </form>
