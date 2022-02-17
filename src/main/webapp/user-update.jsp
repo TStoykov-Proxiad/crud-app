@@ -5,28 +5,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Update profile</title>
 </head>
 <body>
-	<c:if test="${applicationScope.loggedIn == 'false'}">
+	<c:if test="${sessionScope.loggedIn == 'false'}">
 		<c:if test="${requestScope.logAttempt == 'true'}">
 			<p>Wrong username or password</p>
 		</c:if>
 		<form method="post">
 		<p>Login</p>
-         Username: <input type = "text" name = "username">
+         Username: <input type = "text" name = "username" required />
          <br />
-         Password: <input type = "password" name = "pswd" />
+         Password: <input type = "password" name = "pswd" required />
          <br /><br />
          <button type = "submit">Log in</button>         
       	</form>
 	</c:if>
-	<c:if test="${applicationScope.loggedIn == 'true'}">
+	<c:if test="${sessionScope.loggedIn == 'true'}">
 		<form method="post" name = "update">
 		<p>Update details:</p>
-         Username: <input type = "text" name = "username">
+         Username: <input type = "text" name = "username" required />
          <br />
-         Password: <input type = "password" name = "pswd" />
+         Password: <input type = "password" name = "pswd" required />
          <p><button type = "submit">Update</button></p>
       	</form>
       	<br />

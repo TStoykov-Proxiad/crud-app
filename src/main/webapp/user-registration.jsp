@@ -14,9 +14,6 @@
 	<c:if test = "${requestScope.registered == 'false'}">
 		<p>User already exists!</p>
 	</c:if>
-	<c:if test = "${requestScope.emptyField == 'true'}">
-		<p>
-	</c:if>
 	<form method="post">
          Username: <input type = "text" name = "username" placeholder = "Enter Username" required />
          <br />

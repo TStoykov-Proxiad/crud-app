@@ -9,13 +9,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/register")
 public class RegisterUserServlet extends HttpServlet {
-
+  @Override
   protected void service(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     if (req.getMethod().equals("GET")) doGet(req, resp);
     if (req.getMethod().equals("POST")) doPost(req, resp);
   }
 
+  @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     RequestDispatcher dispatcher =
@@ -23,9 +24,10 @@ public class RegisterUserServlet extends HttpServlet {
     dispatcher.forward(req, resp);
   }
 
+  @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    String name = req.getParameter("username");
+    String name = req.getParameter(UserDataFilter.USERNAME_ATTR);
     String pass = req.getParameter("pswd");
     RequestDispatcher dispatcher =
         getServletContext().getRequestDispatcher("/user-registration.jsp");

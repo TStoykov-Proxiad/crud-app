@@ -11,13 +11,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/list-users")
 public class ListUsersServlet extends HttpServlet {
-
+  @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     Set<Map.Entry<Integer, String>> entries =
         ((TreeMap) req.getServletContext().getAttribute(UserDataFilter.USER_ATTR)).entrySet();
     PrintWriter writer = resp.getWriter();
-    writer.append("<html><body>");
+    writer.append("<html><head>\r\n" + "<meta charset=\"UTF-8\">\r\n" + "</head><body>");
     entries.forEach(
         entry -> {
           writer.append(
