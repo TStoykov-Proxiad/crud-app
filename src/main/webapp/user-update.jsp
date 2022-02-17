@@ -22,11 +22,13 @@
       	</form>
 	</c:if>
 	<c:if test="${sessionScope.loggedIn == 'true'}">
+		<c:if test = "${userExists == 'true'}">Username already taken</c:if>
+		<p>Hi there, ${sessionScope.username}</p>
 		<form method="post" name = "update">
 		<p>Update details:</p>
-         Username: <input type = "text" name = "username" required />
+         Username: <input type = "text" name = "username" />
          <br />
-         Password: <input type = "password" name = "pswd" required />
+         Password: <input type = "password" name = "pswd" />
          <p><button type = "submit">Update</button></p>
       	</form>
       	<br />

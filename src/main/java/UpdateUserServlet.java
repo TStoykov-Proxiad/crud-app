@@ -26,6 +26,7 @@ public class UpdateUserServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+    req.getSession().setAttribute("userExists", false); // could probably be done better
     dispatcher.forward(req, resp);
   }
 
@@ -46,6 +47,7 @@ public class UpdateUserServlet extends HttpServlet {
     if (req.getParameter("logout") != null) {
       // logout option
       req.getSession().setAttribute(UserDataFilter.LOG_ATTR, false);
+      req.getSession().removeAttribute(UserDataFilter.USERNAME_ATTR);
     } else if (req.getParameter("delete") != null) {
       // delete option
       doDelete(req, resp);
@@ -57,6 +59,7 @@ public class UpdateUserServlet extends HttpServlet {
           (TreeMap<String, String>) req.getServletContext().getAttribute(UserDataFilter.USER_ATTR);
       if (req.getSession().getAttribute(UserDataFilter.LOG_ATTR).toString().equals("false")) {
         // login option
+        // need to add check for if the user is already logged in on a different session
         if (allUsers.containsKey(name) && allUsers.containsValue(pass)) {
           // success
           req.getSession().setAttribute(UserDataFilter.LOG_ATTR, true);
@@ -68,22 +71,32 @@ public class UpdateUserServlet extends HttpServlet {
         }
       } else {
         // update option
+        boolean userExists = false;
         // update name
         if (!name.equals("")
             && !name.equals(req.getSession().getAttribute(UserDataFilter.USERNAME_ATTR))) {
-          allUsers.put(
-              name, allUsers.get(req.getSession().getAttribute(UserDataFilter.USERNAME_ATTR)));
-          allUsers.remove(req.getSession().getAttribute(UserDataFilter.USERNAME_ATTR));
-          req.getSession().setAttribute(UserDataFilter.USERNAME_ATTR, name);
+          if (!allUsers.containsKey(name)) {
+            allUsers.put(
+                name, allUsers.get(req.getSession().getAttribute(UserDataFilter.USERNAME_ATTR)));
+            allUsers.remove(req.getSession().getAttribute(UserDataFilter.USERNAME_ATTR));
+            req.getSession().setAttribute(UserDataFilter.USERNAME_ATTR, name);
+          } else {
+            userExists = true;
+            req.getSession().setAttribute(UserDataFilter.LOG_ATTR, true);
+          }
         }
+        req.getSession().setAttribute("userExists", userExists);
         // update password
-        if (!pass.equals("")
-            && !pass.equals(
-                allUsers.get(req.getSession().getAttribute(UserDataFilter.USERNAME_ATTR)))) {
-          allUsers.replace(name, pass);
+        if (!userExists) {
+          if (!pass.equals("")
+              && !pass.equals(
+                  allUsers.get(req.getSession().getAttribute(UserDataFilter.USERNAME_ATTR)))) {
+            allUsers.replace(name, pass);
+          }
+          req.getServletContext().setAttribute(UserDataFilter.USER_ATTR, allUsers);
+
+          req.getSession().setAttribute(UserDataFilter.LOG_ATTR, false);
         }
-        req.getServletContext().setAttribute(UserDataFilter.USER_ATTR, allUsers);
-        req.getSession().setAttribute(UserDataFilter.LOG_ATTR, false);
       }
     }
     dispatcher.forward(req, resp);
