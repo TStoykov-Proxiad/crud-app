@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.TreeMap;
+import java.util.HashMap;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,13 +29,14 @@ public class RegisterUserServlet extends HttpServlet {
       throws ServletException, IOException {
     String name = req.getParameter(UserDataFilter.USERNAME_ATTR);
     String pass = req.getParameter("pswd");
+    User newUser = new User(name, pass, false);
     RequestDispatcher dispatcher =
         getServletContext().getRequestDispatcher("/user-registration.jsp");
     boolean registered = false; // used to check if user is already registered
-    TreeMap<String, String> allUsers =
-        (TreeMap<String, String>) req.getServletContext().getAttribute(UserDataFilter.USER_ATTR);
+    HashMap<String, User> allUsers =
+        (HashMap<String, User>) req.getServletContext().getAttribute(UserDataFilter.USER_ATTR);
     if (!allUsers.containsKey(name)) {
-      allUsers.put(name, pass);
+      allUsers.put(name, newUser);
       registered = true;
     }
     req.setAttribute("registered", registered);

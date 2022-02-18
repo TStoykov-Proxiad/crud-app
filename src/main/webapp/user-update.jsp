@@ -12,6 +12,9 @@
 		<c:if test="${requestScope.logAttempt == 'true'}">
 			<p>Wrong username or password</p>
 		</c:if>
+		<c:if test="${sessionScope.alreadyLoggedIn == 'true'}">
+		<p>User already logged in on a different device</p>
+		</c:if>
 		<form method="post">
 		<p>Login</p>
          Username: <input type = "text" name = "username" required />

@@ -1,8 +1,8 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,19 +14,13 @@ public class ListUsersServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    Set<Map.Entry<Integer, String>> entries =
-        ((TreeMap) req.getServletContext().getAttribute(UserDataFilter.USER_ATTR)).entrySet();
+    Set<Map.Entry<String, User>> entries =
+        ((HashMap) req.getServletContext().getAttribute(UserDataFilter.USER_ATTR)).entrySet();
     PrintWriter writer = resp.getWriter();
     writer.append("<html><head>\r\n" + "<meta charset=\"UTF-8\">\r\n" + "</head><body>");
     entries.forEach(
         entry -> {
-          writer.append(
-              "<p>"
-                  + "Username: "
-                  + entry.getKey()
-                  + "<br />Password: "
-                  + entry.getValue()
-                  + "</p>");
+          writer.append("<p>" + entry.getValue().toString() + "</p>");
         });
     writer.append(
         "<form action =\"/\">\r\n"
